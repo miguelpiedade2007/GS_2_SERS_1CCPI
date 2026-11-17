@@ -5,13 +5,11 @@
 
 Este repositório contém a contribuição de energia ao **Citizen Assist AI**. É um assistente que ajuda o cidadão a entender quanto o chuveiro elétrico gasta e a escolher entre três caminhos: economizar no hábito, aquecer a água com o sol ou gerar a própria eletricidade. As recomendações vêm de cálculos documentados e sempre trazem fontes e limitações.
 
-## Integrantes
+## Integrante
 
 | Nome completo | RM |
-|---|---|
-| | |
-| | |
-| | |
+|Miguel Anção Rotílio Piedade|572445|
+
 
 ## Público e problema
 
