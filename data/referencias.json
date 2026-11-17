@@ -1,0 +1,86 @@
+{
+  "IDEC_USP_CHUVEIRO": {
+    "titulo": "Idec – Estudo da USP sobre consumo de água em chuveiros (vazão média de 4 a 4,2 L/min em chuveiros elétricos)",
+    "url": "https://idec.org.br/print/24493"
+  },
+  "IBGE_CENSO": {
+    "titulo": "IBGE – Censo Demográfico 2022: domicílios e moradores",
+    "url": "https://censo2022.ibge.gov.br/"
+  },
+  "INMET_NORMAIS": {
+    "titulo": "INMET – Normais Climatológicas do Brasil (estação São Paulo – Mirante de Santana)",
+    "url": "https://portal.inmet.gov.br/normais"
+  },
+  "NBR15569": {
+    "titulo": "ABNT NBR 15569 – Sistema de aquecimento solar de água em circuito direto: requisitos de projeto e instalação",
+    "url": "https://www.abntcatalogo.com.br/"
+  },
+  "INMETRO_PBE": {
+    "titulo": "Inmetro – Programa Brasileiro de Etiquetagem (PBE): tabelas de chuveiros elétricos e aquecedores solares",
+    "url": "https://www.gov.br/inmetro/pt-br/assuntos/avaliacao-da-conformidade/programa-brasileiro-de-etiquetagem"
+  },
+  "HALLIDAY": {
+    "titulo": "HALLIDAY, D.; RESNICK, R.; WALKER, J. Fundamentos de Física, v. 2: Gravitação, Ondas e Termodinâmica. LTC.",
+    "url": ""
+  },
+  "ANEEL_REAJUSTE_ENEL_2026": {
+    "titulo": "Cenário Energia – Aneel aprova reajuste da Enel São Paulo com efeito médio de 10,18% (30/06/2026)",
+    "url": "https://cenarioenergia.com.br/2026/06/30/aneel-aprova-reajuste-da-enel-sao-paulo-com-efeito-medio-de-1018/"
+  },
+  "FATURAS_ENEL_2026": {
+    "titulo": "Faturas Enel SP de 2026 publicadas no portal de transparência da Câmara dos Deputados (componentes TUSD e TE por kWh)",
+    "url": "https://www.camara.leg.br/cota-parlamentar/documentos/publ/3283/2026/8096594.pdf"
+  },
+  "ANEEL_TARIFAS": {
+    "titulo": "ANEEL – Tarifas residenciais vigentes por distribuidora",
+    "url": "https://www.gov.br/aneel/pt-br/assuntos/tarifas"
+  },
+  "LEI_15235": {
+    "titulo": "Lei nº 15.235/2025 – Amplia a Tarifa Social de Energia Elétrica (gratuidade até 80 kWh/mês para famílias de baixa renda)",
+    "url": "https://www.conjur.com.br/?p=865386"
+  },
+  "AGENCIA_GOV_TARIFA_SOCIAL": {
+    "titulo": "Agência Gov – Novo desconto social na conta de luz já beneficia famílias de baixa renda (jan/2026)",
+    "url": "https://agenciagov.ebc.com.br/noticias/202601/novo-desconto-social-na-conta-de-luz-ja-beneficia-familias-de-baixa-renda-em-todo-o-brasil"
+  },
+  "MCTI_FATOR_EMISSAO": {
+    "titulo": "MCTI/SIRENE – Fatores de emissão de CO2 do Sistema Interligado Nacional (38,5 kgCO2/MWh em 2023)",
+    "url": "https://cenarioenergia.com.br/2024/02/15/emissoes-de-co2-na-geracao-de-energia-atingem-minima-em-onze-anos-no-brasil/"
+  },
+  "CRONOSHARE_PRECO_SOLAR": {
+    "titulo": "Cronoshare – Quanto custa instalar aquecedor solar de água (termossifão)",
+    "url": "https://www.cronoshare.com.br/quanto-custa/instalar-aquecedor-solar-agua-termossifao"
+  },
+  "ABRAVA": {
+    "titulo": "ABRAVA – Departamento Nacional de Aquecimento Solar (DASOL): dados de mercado e retorno de sistemas residenciais",
+    "url": "https://abrava.com.br/"
+  },
+  "CRESESB_SUNDATA": {
+    "titulo": "CRESESB/CEPEL – SunData v3.0: potencial solar por localidade",
+    "url": "https://cresesb.cepel.br/sundata/index.php"
+  },
+  "GREENER_PRECOS": {
+    "titulo": "Cenário Energia – Preço do watt-pico residencial recua 7% em um ano (jun/2026)",
+    "url": "https://cenarioenergia.com.br/2026/06/09/preco-do-watt-pico-residencial-recua-7-em-um-ano-e-abre-janela-de-oportunidade-na-mmgd/"
+  },
+  "PV_MAGAZINE_2026": {
+    "titulo": "pv magazine – PV system costs increase 7% in Brazil in H1 2026 (estudo Greener)",
+    "url": "https://www.pv-magazine.com/2026/09/26/pv-system-costs-increase-7-percent-brazil-h1/"
+  },
+  "LEI_14300": {
+    "titulo": "Lei nº 14.300/2022 – Marco legal da microgeração e minigeração distribuída",
+    "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2022/lei/l14300.htm"
+  },
+  "PROCEL_PPH": {
+    "titulo": "Eletrobras/Procel – Pesquisa de Posse e Hábitos de Uso de Equipamentos Elétricos na Classe Residencial (PPH 2019)",
+    "url": "http://www.procelinfo.com.br/"
+  },
+  "ANEEL_REN1000": {
+    "titulo": "ANEEL – Resolução Normativa nº 1.000/2021: regras de prestação do serviço de distribuição (custo de disponibilidade)",
+    "url": "https://www2.aneel.gov.br/cedoc/ren20211000.html"
+  },
+  "ANEEL_TARIFA_SOCIAL": {
+    "titulo": "ANEEL – Tarifa Social de Energia Elétrica",
+    "url": "https://www.gov.br/aneel/pt-br/assuntos/tarifas/tarifa-social"
+  }
+}

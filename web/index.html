@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citizen Assist AI – Energia</title>
+<style>
+  :root { --fundo:#f6f7f4; --cartao:#fff; --texto:#1d2a22; --suave:#5b6b61; --verde:#1f7a4d; --verde-claro:#e3f2e9; --borda:#d8ded9; --aviso:#fff6e0; }
+  @media (prefers-color-scheme: dark) { :root { --fundo:#141a16; --cartao:#1d2520; --texto:#e8eee9; --suave:#a3b2a8; --verde:#5cc28e; --verde-claro:#20352a; --borda:#33413a; --aviso:#3a3220; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font:17px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; background:var(--fundo); color:var(--texto); }
+  header { padding:20px 16px 8px; max-width:760px; margin:0 auto; }
+  header h1 { margin:0; font-size:1.35rem; }
+  header p { margin:4px 0 0; color:var(--suave); }
+  main { max-width:760px; margin:0 auto; padding:0 16px 140px; }
+  .msg { margin:14px 0; padding:12px 16px; border-radius:14px; white-space:pre-wrap; border:1px solid var(--borda); }
+  .usuario { background:var(--verde-claro); margin-left:15%; }
+  .bot { background:var(--cartao); margin-right:5%; }
+  details { margin-top:10px; font-size:.92rem; color:var(--suave); }
+  details.limites { background:var(--aviso); padding:6px 10px; border-radius:8px; color:var(--texto); }
+  details ul { margin:6px 0; padding-left:20px; }
+  a { color:var(--verde); word-break:break-word; }
+  .sugestoes { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+  .sugestoes button, .avaliar button { border:1px solid var(--verde); background:transparent; color:var(--verde); border-radius:999px; padding:6px 12px; font:inherit; font-size:.92rem; cursor:pointer; }
+  .avaliar { margin-top:10px; display:none; gap:6px; flex-wrap:wrap; align-items:center; font-size:.9rem; }
+  body.teste .avaliar { display:flex; }
+  form { position:fixed; bottom:0; left:0; right:0; background:var(--fundo); border-top:1px solid var(--borda); padding:12px 16px; }
+  .linha { max-width:760px; margin:0 auto; display:flex; gap:8px; }
+  input[type=text] { flex:1; font:inherit; padding:10px 14px; border-radius:12px; border:1px solid var(--borda); background:var(--cartao); color:var(--texto); min-width:0; }
+  button.enviar { font:inherit; padding:10px 18px; border-radius:12px; border:0; background:var(--verde); color:#fff; cursor:pointer; }
+  .modo { max-width:760px; margin:6px auto 0; font-size:.85rem; color:var(--suave); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Citizen Assist AI · Energia no banho</h1>
+  <p>Descubra quanto o chuveiro gasta e as melhores formas de economizar, com contas e fontes.</p>
+</header>
+<main>
+  <div id="conversa" aria-live="polite"></div>
+  <div class="sugestoes" id="sugestoes">
+    <button>Quanto gasta meu chuveiro?</button>
+    <button>Quais as alternativas?</button>
+    <button>Dicas para economizar</button>
+    <button>Aquecedor solar vale a pena?</button>
+    <button>E a placa solar?</button>
+    <button>Tenho tarifa social</button>
+    <button>Impacto ambiental</button>
+    <button>Limitações</button>
+  </div>
+</main>
+<form id="form">
+  <div class="linha">
+    <label for="entrada" style="position:absolute;left:-9999px">Sua pergunta</label>
+    <input id="entrada" type="text" autocomplete="off" placeholder="Ex.: 5 pessoas, banho de 12 minutos, chuveiro de 7500 W">
+    <button class="enviar" type="submit">Enviar</button>
+  </div>
+  <div class="modo"><label><input type="checkbox" id="modoTeste"> Modo teste com usuários (mostra botões de avaliação)</label></div>
+</form>
+<script>
+const sessao = Math.random().toString(36).slice(2);
+const conversa = document.getElementById('conversa');
+const entrada = document.getElementById('entrada');
+
+function adicionar(texto, classe) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + classe;
+  div.textContent = texto;
+  conversa.appendChild(div);
+  div.scrollIntoView({behavior:'smooth', block:'end'});
+  return div;
+}
+
+function lista(itens, fn) {
+  const ul = document.createElement('ul');
+  itens.forEach(i => { const li = document.createElement('li'); fn(li, i); ul.appendChild(li); });
+  return ul;
+}
+
+async function enviar(mensagem) {
+  adicionar(mensagem, 'usuario');
+  const r = await fetch('/api/energia/mensagem', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({sessao, mensagem})});
+  const d = await r.json();
+  const div = adicionar(d.texto, 'bot');
+  if (d.limitacoes && d.limitacoes.length) {
+    const det = document.createElement('details'); det.className = 'limites'; det.open = true;
+    det.innerHTML = '<summary>Importante</summary>';
+    det.appendChild(lista(d.limitacoes, (li, t) => li.textContent = t));
+    div.appendChild(det);
+  }
+  if (d.referencias && d.referencias.length) {
+    const det = document.createElement('details');
+    det.innerHTML = '<summary>Fontes (' + d.referencias.length + ')</summary>';
+    det.appendChild(lista(d.referencias, (li, ref) => {
+      if (ref.url) { const a = document.createElement('a'); a.href = ref.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = ref.titulo; li.appendChild(a); }
+      else li.textContent = ref.titulo;
+    }));
+    div.appendChild(det);
+  }
+  const av = document.createElement('div'); av.className = 'avaliar';
+  av.innerHTML = '<span>Entendeu e foi útil?</span>';
+  [['Sim', true, true], ['Entendi, mas não ajudou', true, false], ['Não entendi', false, false]].forEach(([rot, ent, util]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = rot;
+    b.onclick = async () => {
+      const participante = prompt('Código do participante (ex.: P1):') || '';
+      const comentario = prompt('Comentário (não escreva dados pessoais):') || '';
+      await fetch('/api/energia/feedback', {method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({participante, pergunta: mensagem, intencao: d.intencao, entendeu: ent, util, comentario})});
+      av.textContent = 'Avaliação registrada. Obrigado!';
+    };
+    av.appendChild(b);
+  });
+  div.appendChild(av);
+}
+
+document.getElementById('form').onsubmit = e => {
+  e.preventDefault();
+  const t = entrada.value.trim();
+  if (t) { entrada.value = ''; enviar(t); }
+};
+document.querySelectorAll('#sugestoes button').forEach(b => b.onclick = () => enviar(b.textContent));
+document.getElementById('modoTeste').onchange = e => document.body.classList.toggle('teste', e.target.checked);
+adicionar('Olá! Sou o assistente de energia do Citizen Assist AI. Toque numa sugestão ou conte sobre sua casa (quantas pessoas, tempo de banho, potência do chuveiro).', 'bot');
+</script>
+</body>
+</html>

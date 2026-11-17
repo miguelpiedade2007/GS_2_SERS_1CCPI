@@ -1,0 +1,363 @@
+{
+  "_descricao": "Premissas usadas nos cálculos do módulo de energia do Citizen Assist AI. Cada item informa valor, unidade, tipo (publico = dado publicado por fonte verificável; estimado = estimativa justificada pela equipe; fisico = constante física) e a referência correspondente (ver referencias.json). Faixas 'min'/'max' alimentam a análise de sensibilidade.",
+  "periodo_referencia": {
+    "descricao": "Período comum de comparação das alternativas",
+    "horizonte_anos": 10,
+    "dias_por_mes": 30
+  },
+  "familia_referencia": {
+    "pessoas": {
+      "valor": 4,
+      "unidade": "pessoas",
+      "tipo": "estimado",
+      "ref": [
+        "IBGE_CENSO"
+      ],
+      "justificativa": "Família de referência; o Censo 2022 indica média inferior a 3 moradores por domicílio, mas famílias atendidas em habitação de interesse social costumam ser maiores. O usuário pode informar o próprio número."
+    },
+    "banhos_por_pessoa_dia": {
+      "valor": 1,
+      "unidade": "banho/pessoa/dia",
+      "tipo": "estimado",
+      "ref": [],
+      "justificativa": "Hábito mais comum; ajustável pelo usuário."
+    },
+    "minutos_por_banho": {
+      "valor": 10,
+      "min": 8,
+      "max": 15,
+      "unidade": "min",
+      "tipo": "estimado",
+      "ref": [
+        "IDEC_USP_CHUVEIRO"
+      ],
+      "justificativa": "Duração típica considerada em campanhas de eficiência; ajustável pelo usuário."
+    }
+  },
+  "chuveiro": {
+    "vazao": {
+      "valor": 4.2,
+      "min": 3.0,
+      "max": 6.0,
+      "unidade": "L/min",
+      "tipo": "publico",
+      "ref": [
+        "IDEC_USP_CHUVEIRO"
+      ],
+      "justificativa": "Média anual medida em chuveiros elétricos no estudo da USP divulgado pelo Idec."
+    },
+    "temperatura_agua_fria": {
+      "valor": 20,
+      "unidade": "°C",
+      "tipo": "estimado",
+      "ref": [
+        "INMET_NORMAIS"
+      ],
+      "justificativa": "Aproximação da temperatura média anual da água da rede em São Paulo, próxima à temperatura média do ar (normais climatológicas do INMET). A mesma temperatura é usada em todos os cenários, para comparar alternativas sob a mesma condição."
+    },
+    "temperatura_banho": {
+      "valor": 38,
+      "unidade": "°C",
+      "tipo": "estimado",
+      "ref": [
+        "NBR15569"
+      ],
+      "justificativa": "Temperatura de conforto usual para banho, adotada em projetos de aquecimento de água."
+    },
+    "eficiencia_chuveiro": {
+      "valor": 0.95,
+      "unidade": "adimensional",
+      "tipo": "estimado",
+      "ref": [
+        "INMETRO_PBE"
+      ],
+      "justificativa": "Chuveiros elétricos convertem quase toda a energia elétrica em calor na água; perdas pequenas por convecção e radiação."
+    },
+    "potencia_nominal": {
+      "valor": 5500,
+      "unidade": "W",
+      "tipo": "publico",
+      "ref": [
+        "INMETRO_PBE"
+      ],
+      "justificativa": "Potência mais comum dos chuveiros etiquetados (posição inverno). Usada só para conferir o cálculo físico."
+    },
+    "meses_modo_verao": {
+      "valor": 6,
+      "unidade": "meses/ano",
+      "tipo": "estimado",
+      "ref": [
+        "INMET_NORMAIS"
+      ],
+      "justificativa": "Outubro a março, meses mais quentes em São Paulo, quando um banho menos quente tende a ser aceito."
+    },
+    "razao_potencia_verao": {
+      "valor": 0.55,
+      "unidade": "adimensional",
+      "tipo": "estimado",
+      "ref": [
+        "INMETRO_PBE"
+      ],
+      "justificativa": "Razão típica entre a potência da posição verão e a da posição inverno (por exemplo, cerca de 3.000 W em um chuveiro de 5.500 W). Usada apenas na dica adicional do modo verão, que reduz a temperatura do banho e por isso não entra na comparação principal."
+    }
+  },
+  "fisica": {
+    "calor_especifico_agua": {
+      "valor": 4.186,
+      "unidade": "kJ/(kg·K)",
+      "tipo": "fisico",
+      "ref": [
+        "HALLIDAY"
+      ]
+    },
+    "densidade_agua": {
+      "valor": 1.0,
+      "unidade": "kg/L",
+      "tipo": "fisico",
+      "ref": [
+        "HALLIDAY"
+      ]
+    },
+    "kj_por_kwh": {
+      "valor": 3600,
+      "unidade": "kJ/kWh",
+      "tipo": "fisico",
+      "ref": [
+        "HALLIDAY"
+      ]
+    }
+  },
+  "tarifa": {
+    "tarifa_kwh": {
+      "valor": 0.9,
+      "min": 0.8,
+      "max": 1.05,
+      "unidade": "R$/kWh",
+      "tipo": "estimado",
+      "ref": [
+        "ANEEL_REAJUSTE_ENEL_2026",
+        "FATURAS_ENEL_2026"
+      ],
+      "justificativa": "TUSD + TE da Enel SP em 2026 (cerca de R$ 0,725/kWh sem tributos) com PIS/COFINS e ICMS, conforme faturas públicas de 2026. Não inclui bandeira tarifária nem contribuição de iluminação pública; o máximo considera bandeira vermelha."
+    },
+    "franquia_tarifa_social": {
+      "valor": 80,
+      "unidade": "kWh/mês",
+      "tipo": "publico",
+      "ref": [
+        "ANEEL_TARIFA_SOCIAL",
+        "LEI_15235",
+        "AGENCIA_GOV_TARIFA_SOCIAL"
+      ],
+      "justificativa": "Famílias de baixa renda inscritas no CadÚnico têm isenção do consumo até 80 kWh/mês; o que excede é cobrado normalmente."
+    }
+  },
+  "emissoes": {
+    "fator_emissao_sin": {
+      "valor": 0.0385,
+      "min": 0.025,
+      "max": 0.09,
+      "unidade": "kgCO2/kWh",
+      "tipo": "publico",
+      "ref": [
+        "MCTI_FATOR_EMISSAO"
+      ],
+      "justificativa": "Fator médio do Sistema Interligado Nacional em 2023 (38,5 kgCO2/MWh). Varia mês a mês conforme o uso de termelétricas; o máximo representa anos secos."
+    }
+  },
+  "alternativa_banho_consciente": {
+    "minutos_meta": {
+      "valor": 7,
+      "unidade": "min",
+      "tipo": "estimado",
+      "ref": [],
+      "justificativa": "Meta de banho de 7 minutos, alcançável com temporizador; redução de 30% sobre 10 minutos."
+    },
+    "investimento": {
+      "valor": 30,
+      "unidade": "R$",
+      "tipo": "estimado",
+      "ref": [],
+      "justificativa": "Temporizador de banho ou ampulheta simples."
+    },
+    "manutencao_anual": {
+      "valor": 0,
+      "unidade": "R$/ano",
+      "tipo": "estimado",
+      "ref": []
+    }
+  },
+  "alternativa_aquecedor_solar": {
+    "litros_reservatorio_por_litro_banho": {
+      "valor": 1.19,
+      "unidade": "L de reservatório por L de banho/dia",
+      "tipo": "estimado",
+      "ref": [
+        "NBR15569",
+        "CRONOSHARE_PRECO_SOLAR"
+      ],
+      "justificativa": "Calibrado pela recomendação de mercado de 200 L para 3 a 4 pessoas: a família de referência usa 168 L/dia de água a 38 °C, e 200 ÷ 168 ≈ 1,19. A água é acumulada mais quente que 38 °C e misturada com água fria, mas guarda-se margem para perdas e dias nublados. O volume resultante é arredondado para o tamanho comercial acima."
+    },
+    "volumes_comerciais": {
+      "valor": [
+        100,
+        150,
+        200,
+        300,
+        400,
+        500,
+        600,
+        800,
+        1000
+      ],
+      "unidade": "L",
+      "tipo": "estimado",
+      "ref": [
+        "INMETRO_PBE"
+      ],
+      "justificativa": "Capacidades usuais de reservatórios térmicos residenciais; o volume calculado é arredondado para o tamanho comercial imediatamente acima. Acima de 1.000 L o caso exige projeto específico."
+    },
+    "area_coletor_por_100l": {
+      "valor": 1.0,
+      "unidade": "m² por 100 L",
+      "tipo": "estimado",
+      "ref": [
+        "NBR15569"
+      ],
+      "justificativa": "Cerca de 1 m² de coletor plano para cada 100 L de reservatório em São Paulo."
+    },
+    "fracao_solar": {
+      "valor": 0.7,
+      "min": 0.55,
+      "max": 0.8,
+      "unidade": "adimensional",
+      "tipo": "estimado",
+      "ref": [
+        "NBR15569",
+        "ABRAVA"
+      ],
+      "justificativa": "Parcela da energia de aquecimento fornecida pelo sol ao longo do ano; o restante vem do chuveiro elétrico (apoio) em dias nublados e no inverno."
+    },
+    "custo_fixo": {
+      "valor": 1500,
+      "unidade": "R$",
+      "tipo": "estimado",
+      "ref": [
+        "CRONOSHARE_PRECO_SOLAR"
+      ],
+      "justificativa": "Parcela que não depende do tamanho (mão de obra, tubulação, suporte). Junto com o custo por litro, reproduz cerca de R$ 5.000 para 200 L, o centro da faixa de mercado de R$ 3.000 a R$ 8.000."
+    },
+    "custo_por_litro": {
+      "valor": 17.5,
+      "unidade": "R$/L",
+      "tipo": "estimado",
+      "ref": [
+        "CRONOSHARE_PRECO_SOLAR"
+      ],
+      "justificativa": "Parcela proporcional ao tamanho (reservatório e coletores): 1.500 + 17,5 × 200 = R$ 5.000."
+    },
+    "fator_custo": {
+      "valor": 1.0,
+      "min": 0.6,
+      "max": 1.6,
+      "unidade": "adimensional",
+      "tipo": "estimado",
+      "ref": [
+        "CRONOSHARE_PRECO_SOLAR"
+      ],
+      "justificativa": "Variação de preço entre instaladores: 0,6 a 1,6 reproduz a faixa de R$ 3.000 a R$ 8.000 para 200 L."
+    },
+    "manutencao_anual": {
+      "valor": 150,
+      "unidade": "R$/ano",
+      "tipo": "estimado",
+      "ref": [
+        "NBR15569"
+      ],
+      "justificativa": "Limpeza de coletores e verificação do reservatório e do ânodo de sacrifício."
+    },
+    "vida_util": {
+      "valor": 15,
+      "unidade": "anos",
+      "tipo": "estimado",
+      "ref": [
+        "ABRAVA"
+      ]
+    }
+  },
+  "alternativa_fotovoltaica": {
+    "hsp": {
+      "valor": 4.5,
+      "min": 4.1,
+      "max": 4.9,
+      "unidade": "kWh/(m²·dia)",
+      "tipo": "estimado",
+      "ref": [
+        "CRESESB_SUNDATA"
+      ],
+      "justificativa": "Estimativa da equipe para a irradiação média diária no plano inclinado na cidade de São Paulo (lat. −23,55°, long. −46,63°, inclinação próxima da latitude, voltado para o norte). Valores publicados para a região ficam entre cerca de 4,1 e 4,9 kWh/m²·dia, faixa usada na sensibilidade. O valor exato do ponto deve ser consultado no SunData/CRESESB no projeto de cada casa."
+    },
+    "performance_ratio": {
+      "valor": 0.75,
+      "unidade": "adimensional",
+      "tipo": "estimado",
+      "ref": [
+        "CRESESB_SUNDATA"
+      ],
+      "justificativa": "Perdas típicas por temperatura, sujeira, cabos e inversor."
+    },
+    "potencia_modulo_kwp": {
+      "valor": 0.55,
+      "unidade": "kWp",
+      "tipo": "estimado",
+      "ref": [],
+      "justificativa": "Potência típica de módulos monocristalinos comerciais vendidos no Brasil em 2025–2026 (faixa de 540 a 600 Wp); o sistema é arredondado para módulos inteiros."
+    },
+    "area_por_modulo": {
+      "valor": 2.6,
+      "unidade": "m²",
+      "tipo": "estimado",
+      "ref": [],
+      "justificativa": "Área típica de módulos dessa potência (cerca de 2,28 m × 1,13 m), conforme fichas técnicas de fabricantes."
+    },
+    "preco_wp": {
+      "valor": 3.5,
+      "min": 2.8,
+      "max": 4.5,
+      "unidade": "R$/Wp",
+      "tipo": "estimado",
+      "ref": [
+        "GREENER_PRECOS",
+        "PV_MAGAZINE_2026"
+      ],
+      "justificativa": "Sistemas muito pequenos (1 a 2 kWp) custam mais por Wp que a média nacional de sistemas de cerca de 4 kWp (R$ 2,45 a R$ 2,85/Wp)."
+    },
+    "fator_compensacao": {
+      "valor": 0.85,
+      "min": 0.75,
+      "max": 0.95,
+      "unidade": "adimensional",
+      "tipo": "estimado",
+      "ref": [
+        "LEI_14300"
+      ],
+      "justificativa": "Hipótese simplificada da equipe, não um percentual definido em lei. A Lei 14.300/2022 prevê a cobrança gradual de parte da tarifa (componente 'Fio B') sobre a energia compensada; adotamos que cada kWh compensado vale em média 85% da tarifa no período. A faixa de 75% a 95% entra na sensibilidade."
+    },
+    "manutencao_anual": {
+      "valor": 100,
+      "unidade": "R$/ano",
+      "tipo": "estimado",
+      "ref": [],
+      "justificativa": "Limpeza e inspeção anual."
+    },
+    "consumo_minimo_disponibilidade": {
+      "valor": 50,
+      "unidade": "kWh/mês",
+      "tipo": "publico",
+      "ref": [
+        "ANEEL_REN1000"
+      ],
+      "justificativa": "Custo de disponibilidade cobrado mesmo com créditos: 30 kWh (monofásico), 50 kWh (bifásico) ou 100 kWh (trifásico). Adotamos ligação bifásica, comum em casas com chuveiro de 5.500 W."
+    }
+  }
+}
